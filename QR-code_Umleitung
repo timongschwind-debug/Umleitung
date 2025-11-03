@@ -1,32 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QR Redirect</title>
-<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="expires" content="0">
+  <meta charset="UTF-8">
+  <title>Weiterleitung</title>
+  <!-- Optional: kurze Meldung, falls JavaScript deaktiviert ist -->
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=https://www.swissfilms.ch/de/person/liam-erlach/a94e3ffbf1d44c7db6749df173864c7b">
+  </noscript>
+  <script>
+    // ---------------------------------------------------------
+    // 1. Parameter aus der URL holen (z. B. ?to=https://ziel.de)
+    // 2. Falls kein Parameter vorhanden → Standard‑URL
+    // ---------------------------------------------------------
+    const params = new URLSearchParams(window.location.search);
+    const target = params.get('to') || 'https://www.swissfilms.ch/de/person/liam-erlach/a94e3ffbf1d44c7db6749df173864c7b'; // <-- hier deine Default‑Seite
+    // Sicherheits‑Check: nur http(s) erlauben, damit keine gefährlichen Schemes laufen
+    if (/^https?:\/\//i.test(target)) {
+      window.location.replace(target);
+    } else {
+      document.body.textContent = 'Ungültige Ziel‑URL.';
+    }
+  </script>
 </head>
 <body>
-<p>Weiterleitung...</p>
-<script>
-(async function(){
-try {
-// Lade https://www.swissfilms.ch/de/person/liam-erlach/a94e3ffbf1d44c7db6749df173864c7b, mit Timestamp um Caching zu umgehen
-const r = await fetch('/Umleitung/https://www.swissfilms.ch/de/person/liam-erlach/a94e3ffbf1d44c7db6749df173864c7b?ts=' + Date.now(), {cache: 'no-store'});
-if (!r.ok) throw new Error('https://www.swissfilms.ch/de/person/liam-erlach/a94e3ffbf1d44c7db6749df173864c7b nicht gefunden');
-let url = (await r.text()).trim();
-if (!url) throw new Error('leere URL in https://www.swissfilms.ch/de/person/liam-erlach/a94e3ffbf1d44c7db6749df173864c7b');
-// Optional: einfache Validierung
-if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-// Weiterleiten
-window.location.replace(url);
-} catch (e) {
-console.error(e);
-document.body.innerHTML = '<h3>Fehler beim Weiterleiten</h3><p>'+e.message+'</p>';
-}
-})();
-</script>
+  <p>Leitet weiter…</p>
 </body>
 </html>
